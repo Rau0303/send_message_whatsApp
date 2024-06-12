@@ -46,10 +46,11 @@ def send_message_selenium(message: Message):
 def send_whatsapp_message_selenium(phone_no, text):
     try:
         driver.get(f"https://web.whatsapp.com/send?phone={phone_no}&text={text}")
-        time.sleep(10)  # Даем время для загрузки страницы и QR-кода
+        time.sleep(10)  
         input_box = driver.find_element(By.CSS_SELECTOR, 'div[data-tab="6"]')
         input_box.send_keys(text)
-        input_box.send_keys(Keys.ENTER)
+        send_button = driver.find_element(By.CSS_SELECTOR, 'button[data-tab="11"]')
+        send_button.click()
         time.sleep(3)  # Даем время для отправки сообщения
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
